@@ -6,16 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   ShoppingCart,
   Filter,
-  ChevronDown,
   Star,
-  X
 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import Image from 'next/image';
 
 const ProductsPage = () => {
   // Products Data
-  const products = [
+  const products = React.useMemo(() => [
     {
       id: 1,
       name: "Premium Shilajit Resin",
@@ -71,7 +69,7 @@ const ProductsPage = () => {
       description: "Complete bundle with resin, capsules, and powder.",
       tags: ["Bundle", "Value", "Complete"]
     }
-  ];
+  ], []);
 
   // State management
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -100,7 +98,7 @@ const ProductsPage = () => {
   ];
 
   // Filter and sort products
-  const filterProducts = () => {
+  const filterProducts = React.useCallback(() => {
     let filtered = [...products];
 
     // Category filter
@@ -140,15 +138,15 @@ const ProductsPage = () => {
     }
 
     setFilteredProducts(filtered);
-  };
+  }, [selectedCategory, sortBy, priceRange, products]);
 
   // Effect to update filtered products when filters change
   React.useEffect(() => {
     filterProducts();
-  }, [selectedCategory, sortBy, priceRange]);
+  }, [selectedCategory, sortBy, priceRange, filterProducts]);
 
   // Render star rating
-  const RatingStars = ({ rating }) => {
+  const RatingStars = ({ rating }: { rating: number }) => {
     return (
       <div className="flex items-center">
         {[...Array(5)].map((_, index) => (

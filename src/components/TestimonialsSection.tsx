@@ -42,7 +42,7 @@ const TestimonialsSection = () => {
                   <Star className="h-8 w-8 text-amber-500" />
                 </div>
                 <p className="text-gray-700 mb-6 flex-grow italic">
-                  "{testimonial.content}"
+                  {`"${testimonial.content}"`}
                 </p>
                 <div className="flex items-center">
                   <Image
