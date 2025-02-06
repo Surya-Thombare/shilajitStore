@@ -7,7 +7,7 @@ import Image from "next/image"
 import { useState } from "react"
 
 interface CartItem {
-  id: string
+  id: string | number
   name: string
   price: number
   quantity: number
@@ -15,9 +15,24 @@ interface CartItem {
 }
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    {
+      id: 1,
+      name: "Premium Shilajit Resin",
+      price: 49.99,
+      quantity: 5,
+      image: "/assets/images/shilajit.jpg"
+    },
+    {
+      id: 2,
+      name: "Premium Shilajit Resin",
+      price: 49.99,
+      quantity: 2,
+      image: "/assets/images/shilajit.jpg"
+    },
+  ])
 
-  const updateQuantity = (id: string, change: number) => {
+  const updateQuantity = (id: string | number, change: number) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
         item.id === id
@@ -27,7 +42,7 @@ export default function CartPage() {
     )
   }
 
-  const removeItem = (id: string) => {
+  const removeItem = (id: string | number) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== id))
   }
 
@@ -46,6 +61,8 @@ export default function CartPage() {
             {cartItems.map((item) => (
               <div key={item.id} className="flex items-center space-x-4 border-b pb-4">
                 <Image
+                  width={300}
+                  height={200}
                   src={item.image}
                   alt={item.name}
                   className="h-24 w-24 object-cover rounded"
